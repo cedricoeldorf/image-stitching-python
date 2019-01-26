@@ -11,13 +11,13 @@ All reported values for sensitivity analysis are average values for 5 -10 iterat
 
 ## Matching Keypoint Detection
 
-![alt text](./1.png)
+![alt text](./results/1.png)
 The above image depicts all the key points found by the SIFT algorithm. The next step was to extract the key points that are a match between both images. This filtering occured in two steps. Through thresholding a distance metric between descriptors and through the application of RANSAC, for which the latter will be covered in a subsequent section.
 
 ## Keypoint Matching
 For each keypoint descriptor in the first image, the closest descriptor on the second image was extracted. This returned a set of matching keypoints, which was then reduced by dropping any matches that did not fall within a minimum distance. Two distance metrics were tested, the euclidean distance and the normalized correlation metric.
 
-![alt text](./2.png)
+![alt text](./results/2.png)
 The two metrics performed similarly, however, the normalized correlation metric had a significantly higher computation time through it’s slightly more complex calculation.
 
 For this reason this report makes use of the euclidean distance as a baseline for other sensitivity analysis.
@@ -25,7 +25,7 @@ For this reason this report makes use of the euclidean distance as a baseline fo
 
 ## Extracting Robust Matches
 In order to extract to minimize the number of false positive matches, only those that fall within a minimum distance threshold are selected.
-![alt text](./3.png)
+![alt text](./results/3.png)
 
 It is interesting to see how a larger threshold actually yielded a lower error on average. We hypothesize that this is due to the fact that RANSAC is better at selecting matches as opposed to the distance heuristic. Thus, by leaving more points to RANSAC, the selection turns out to be better.
 
@@ -36,7 +36,7 @@ The RANSAC algorithm depended mainly on two parameters, sample size and error th
 
 The sample size refers to the number of match points to extract for each RANSAC iteration. A guideline is to use a sample size of more than 3 to lessen the risk of having a far from correct transformation.
 
-![alt text](./4.png)
+![alt text](./results/4.png)
 
 
 We see in Fig 5 that the optimal sample sizes are between 4 and 10. Any higher and we start overfitting the RANSAC model. Figure 6 depicts the relationship between the error threshold and the final error. THere seems to be a positive correlation, a higher threshold returns a worse performance. However, if the threshold is too small then the performance is bad again as there aren’t enough keypoints.
@@ -46,12 +46,12 @@ We see in Fig 5 that the optimal sample sizes are between 4 and 10. Any higher a
 ### Key Points before RANSAC
 Here we see the key points before RANSAC is run. Purely through visual inspection one can recognize that many keypoints are not shared by both images.
 
-![alt text](./5.png)
+![alt text](./results/5.png)
 
 Key Points after RANSAC (Inliers)
 In the below image we can clearly see how the RANSAC algorithm cut out the outliers. In the second set of images we see that there are hardly any key points left that are not mutually shared by both halves. This is an indication that out RANSAC algorithm did a good job in detecting and cutting out outliers.
 
-![alt text](./6.png)
+![alt text](./results/6.png)
 ## Keypoint Extraction
 The first task of this assignment was to find the matching keypoints between the two image halves. Although the Harris corner detection algorithm was recommended, SIFT was implemented for this assignment as it returned more robust keypoints.
 
@@ -65,8 +65,8 @@ RANSAC error threshold: 2.7886874914558863e-07
 Number of Inliers: 634
 Number of Outliers: 3296
 Average Inlier Residual: ~1195
-![alt text](./7.png)
-![alt text](./8.png)
+![alt text](./results/7.png)
+![alt text](./results/8.png)
 
 # Running the code
 
